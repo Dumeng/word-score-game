@@ -1,6 +1,20 @@
 #layout{
-	 max-width: 720px;
-	 margin: auto;
+	max-width: 720px;
+	margin: auto;
+	padding-top: 10%;
+}
+
+#score-box{
+	font-size: large;
+}
+
+#letters-in-bag-number-box{
+	font-size: large;
+}
+
+#button-div{
+	width: 80%;
+	margin: auto;
 }
 
 .letter{
@@ -11,7 +25,6 @@
 .point{
     margin-top: 0px;
     margin-left: 50px;
-    
     font-size: 1.8em;
 }
 
