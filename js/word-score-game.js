@@ -191,6 +191,7 @@ function findWordToUse() {
     for (i in YOUR_HAND) {
         lettersInHand.push(YOUR_HAND[i].letter);
     }
+	lettersInHand.sort();
     var vaildWords = new Array();
     for (len = 2; len <= YOUR_HAND.length; len++) {
         vaildWords = vaildWords.concat(getArrangement(lettersInHand, len));
@@ -243,11 +244,17 @@ function getArrangement(letters, len) {
     if (len == 1) {
         for (i in letters) {
             if (letters[i] == "_") {
+				wordsList = new Array();
                 for (l = 0; l < 26; l++) {
                     wordsList.push(String.fromCharCode(65 + l));
                 }
                 break;
             } else {
+				if(i > 0) {
+					if (letters[i - 1] == letters[i]) {
+						continue;
+					}
+				}
                 wordsList.push(letters[i]);
             }
         }
@@ -256,23 +263,29 @@ function getArrangement(letters, len) {
         var tLetter,
         tList;
         for (i in letters) {
+			if(i > 0) {
+				if (letters[i - 1] == letters[i]) {
+					continue;
+				}
+			}
             tLetter = letters[i];
             letters.splice(i, 1);
-            tList = getArrangement(letters, len - 1)
-                if (tLetter == "_") {
-                    for (l = 0; l < 26; l++) {
-                        for (j in tList) {
-                            wordsList.push(String.fromCharCode(65 + l) + tList[j]);
-                        }
-                    }
-                    letters.splice(i - 1, 0, tLetter);
-                    break;
-                } else {
-                    for (j in tList) {
-                        wordsList.push(tLetter + tList[j]);
-                    }
-                }
-                letters.splice(i - 1, 0, tLetter);
+            tList = getArrangement(letters, len - 1);
+			if (tLetter == "_") {
+				wordList = new Array();
+				for (l = 0; l < 26; l++) {
+					for (j in tList) {
+						wordsList.push(String.fromCharCode(65 + l) + tList[j]);
+					}
+				}
+				letters.splice(i - 1, 0, tLetter);
+				break;
+			} else {
+				for (j in tList) {
+					wordsList.push(tLetter + tList[j]);
+				}
+			}
+			letters.splice(i - 1, 0, tLetter);
         }
         return wordsList;
     }
